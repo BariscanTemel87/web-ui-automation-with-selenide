@@ -1,12 +1,11 @@
-package tests;
+package modals;
 
 import com.codeborne.selenide.SelenideElement;
 import org.openqa.selenium.By;
 
 import static com.codeborne.selenide.Selenide.$;
-import static com.codeborne.selenide.Condition.*;
 
-public class AddRecordPage {
+public class AddRecordModal {
 
     private SelenideElement firstNameInput = $(By.xpath("//*[@id='firstName']"));
     private SelenideElement lastNameInput = $(By.xpath("//*[@id='lastName']"));
@@ -26,11 +25,6 @@ public class AddRecordPage {
         submitButton.click();
     }
 
-    public void verifyRecordAdded(String expectedFirstName) {
-        SelenideElement addedRecord = $(By.xpath("//div[contains(@class, 'rt-tr-group')]//div[text()='" + expectedFirstName + "']"));
-        addedRecord.shouldBe(visible);
-    }
-
     public void editRecord(String firstName, String newFirstName) {
         SelenideElement editButton = $(By.xpath("//div[contains(@class, 'rt-tr-group')]//div[text()='" + firstName + "']//following-sibling::div//span[@title='Edit']"));
         editButton.click();
@@ -39,8 +33,12 @@ public class AddRecordPage {
         submitButton.click();
     }
 
-    public void verifyRecordEdited(String newFirstName) {
-        SelenideElement editedRecord = $(By.xpath("//div[contains(@class, 'rt-tr-group')]//div[text()='" + newFirstName + "']"));
-        editedRecord.shouldBe(visible);
+    // Bu metotların assert'ları test sınıfına taşındı, burada sadece element varlığını döndürüyoruz
+    public SelenideElement getAddedRecord(String expectedFirstName) {
+        return $(By.xpath("//div[contains(@class, 'rt-tr-group')]//div[text()='" + expectedFirstName + "']"));
+    }
+
+    public SelenideElement getEditedRecord(String newFirstName) {
+        return $(By.xpath("//div[contains(@class, 'rt-tr-group')]//div[text()='" + newFirstName + "']"));
     }
 }
